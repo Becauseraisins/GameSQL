@@ -63,28 +63,55 @@ namespace GameApi.Handlers
             }
             return VillainList;
         }
-        public string UploadGame(string win)
+        public List<Game> GetGames()
         {
-            int rowsaffected;
-            string query = "INSERT INTO GAME VALUES(@Date, @Win)";
-            SqlCommand command = new SqlCommand(query, connection);
-            SqlParameter DateParam = new SqlParameter();
-            DateParam.ParameterName = "@Date";
-            DateParam.Value = System.DateTime.Now;
-
-            SqlParameter WinParam = new SqlParameter();
-            WinParam.ParameterName = "@Win";
-            WinParam.Value = win;
-
-            command.Parameters.Add(DateParam);
-            command.Parameters.Add(WinParam);
-            connection.Open();
-            rowsaffected = command.ExecuteNonQuery();
-            if (rowsaffected > 0)
+            string query = "SELECT * FROM GAME";
+            List<Game> GamesList = new List<Game>();
+            Game FoundGame;
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                return "Upload Successful!";
+                SqlCommand command = new SqlCommand(query, connection);
+                connection.Open();
+                SqlDataReader result = command.ExecuteReader();
+                while (result.Read())
+                {
+                    System.DateTime GameTime = result.GetDateTime(0);
+                    string outcome = result.GetString(1);
+                    FoundGame = new Game(GameTime, outcome);
+                    GamesList.Add(FoundGame);
                 }
-                else return "Failed";
+            }
+            return GamesList;
+        }
+        public int UploadGame(string win)
+        {   char winInput;
+            if(win=="w"){
+                winInput ='w';
+            }
+            else{
+                winInput = 'l';
+            }
+            int rowsaffected = 0;
+            string query = "INSERT INTO GAME VALUES(@date, @win)";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                connection.Open();
+
+                SqlParameter DateParam = new SqlParameter();
+                DateParam.ParameterName = "@date";
+                DateParam.Value = System.DateTime.Now;
+
+                SqlParameter WinParam = new SqlParameter();
+                WinParam.ParameterName = "@win";
+                WinParam.Value = winInput;
+
+                command.Parameters.Add(DateParam);
+                command.Parameters.Add(WinParam);
+
+                rowsaffected = command.ExecuteNonQuery();
+            }
+            return rowsaffected;
         }
 
     }

@@ -28,8 +28,13 @@ namespace GameApi.Controllers
         {
             return this.dbh.GetVillains();
         }
+        [HttpGet("Game")]
+        public List<Game> GetGames()
+        {
+            return this.dbh.GetGames();
+        }
         [HttpPost("Game")]
-        public string UploadGame(string win)
+        public int UploadGameS(string win)
         {
             return this.dbh.UploadGame(win);
         }
@@ -38,10 +43,12 @@ namespace GameApi.Controllers
         {
             throw new System.NotImplementedException();
         }
+        [HttpDelete("Villains")]
         public string DeleteVillain()
         {
             throw new System.NotImplementedException();
         }
+        [HttpDelete("Game")]
         public string DeleteGame()
         {
             throw new System.NotImplementedException();

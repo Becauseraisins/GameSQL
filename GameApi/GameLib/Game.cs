@@ -5,16 +5,14 @@ namespace GameLib
 {
     public class Game
     {
-        System.DateTime GameTime;
-        List<Hero> Heroes;
-        List<Villain> Villains;
-        string Win;
 
-        public Game(DateTime gameTime, List<Hero> heroes, List<Villain> villains, string win)
+
+        public DateTime GameTime {get;set;}
+        public string Win{get;set;}
+
+                public Game(DateTime gameTime, string win)
         {
             GameTime = gameTime;
-            Heroes = heroes;
-            Villains = villains;
             Win = win;
         }
     }
