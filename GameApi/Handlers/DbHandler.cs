@@ -35,7 +35,7 @@ namespace GameApi.Handlers
                     int DiceMax = result.GetInt32(1);
                     int DiceMin = result.GetInt32(2);
                     int UsesLeft = result.GetInt32(3);
-                    int ID = result.GetInt32(4);
+                    string ID = result.GetString(4);
                     FoundHero = new Hero(HeroName, DiceMin, DiceMax, UsesLeft, ID);
                     HeroesList.Add(FoundHero);
                 }
@@ -56,7 +56,7 @@ namespace GameApi.Handlers
                 {
                     string VillainName = result.GetString(0);
                     int HP = result.GetInt32(1);
-                    int ID = result.GetInt32(2);
+                    string ID = result.GetString(2);
                     FoundVillain = new Villain(VillainName, HP, ID);
                     VillainList.Add(FoundVillain);
                 }

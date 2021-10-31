@@ -26,7 +26,7 @@ namespace GameApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddCors();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -35,24 +35,6 @@ namespace GameApi
               services.AddCors(options =>
 
      {
-
-         options.AddPolicy("AllowAll",
-
-             builder =>
-
-             {
-
-                 builder
-
-                 .AllowAnyOrigin() 
-
-                 .AllowAnyMethod()
-
-                 .AllowAnyHeader()
-
-                 .AllowCredentials();
-
-             });
 
      });
         }
@@ -66,17 +48,22 @@ namespace GameApi
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "GameApi v1"));
             }
-            app.UseCors("AllowAll");
+
             app.UseHttpsRedirection();
 
-            app.UseRouting();
+             app.UseRouting();
 
+            // global cors policy
+            app.UseCors(x => x
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true) // allow any origin
+                .AllowCredentials()); // allow credentials
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseEndpoints(x => x.MapControllers());
         }
     }
 }

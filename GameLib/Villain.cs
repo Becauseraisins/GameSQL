@@ -4,8 +4,8 @@ namespace GameLib
     {
         public string Name {get; set;}
         public int Health {get; set;}
-        public int ID{get; set;}
-        public Villain(string name, int health, int iD)
+        public string ID{get; set;}
+        public Villain(string name, int health, string iD)
         {
             Name = name;
             Health = health;

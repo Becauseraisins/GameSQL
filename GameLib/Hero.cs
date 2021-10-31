@@ -8,9 +8,9 @@ namespace GameLib
         public int DiceMin{get; set;}
         public int DiceMax{get; set;}
         public int UsesLeft{get; set;}
-        public int ID{get; set;}
+        public string ID{get; set;}
 
-        public Hero(string name, int diceMin, int diceMax, int usesLeft, int iD)
+        public Hero(string name, int diceMin, int diceMax, int usesLeft, string iD)
         {
             Name = name;
             DiceMin = diceMin;
