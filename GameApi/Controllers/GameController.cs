@@ -33,7 +33,12 @@ namespace GameApi.Controllers
         {
             return this.dbh.GetGames();
         }
-        [HttpPost("Game")]
+        [HttpGet("10Game")]
+        public List<Game> Get10Games()
+        {
+            return this.dbh.Get10Games();
+        }
+        [HttpPost("Game/{win}")]
         public int UploadGameS(string win)
         {
             return this.dbh.UploadGame(win);

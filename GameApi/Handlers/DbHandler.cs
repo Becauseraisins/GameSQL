@@ -83,13 +83,36 @@ namespace GameApi.Handlers
             }
             return GamesList;
         }
+         public List<Game> Get10Games()
+        {
+            string query = "SELECT TOP 10 * FROM GAME ORDER BY [DateTime] DESC ";
+            List<Game> GamesList = new List<Game>();
+            Game FoundGame;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                connection.Open();
+                SqlDataReader result = command.ExecuteReader();
+                while (result.Read())
+                {
+                    System.DateTime GameTime = result.GetDateTime(0);
+                    string outcome = result.GetString(1);
+                    FoundGame = new Game(GameTime, outcome);
+                    GamesList.Add(FoundGame);
+                }
+            }
+            return GamesList;
+        }
         public int UploadGame(string win)
         {   char winInput;
-            if(win=="w"){
-                winInput ='w';
+            if(win=="W"){
+                winInput ='W';
+            }
+            else if (win=="L"){
+                winInput = 'L';
             }
             else{
-                winInput = 'l';
+                return 0;
             }
             int rowsaffected = 0;
             string query = "INSERT INTO GAME VALUES(@date, @win)";
